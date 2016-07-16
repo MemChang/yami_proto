@@ -16,14 +16,17 @@ public class boxes : MonoBehaviour {
     int random_seed;    //칼라 선택을 위한 랜덤 시드
 
     Score _Score;   //Score 변경을 위한 object
-
+    Combo combo;
+    gauge_bar _gauge;
     // Use this for initialization
     void Start()
     {
+        _gauge = GameObject.FindObjectOfType<gauge_bar>();
+        PlayManager.startState();
         //Score object를 찾아 _Score에 저장.
         _Score = GameObject.FindObjectOfType<Score>();
+        combo = GameObject.FindObjectOfType<Combo>();
 
-        
         for (int i = 0; i < 12; i++)    //12개의 박스의 색깔을 랜덤으로 초기화
         {
             random_seed = Random.Range(0, 2);   //0 또는 1을 random_seed에 저장
@@ -42,8 +45,14 @@ public class boxes : MonoBehaviour {
         {
             Boxes_down();          //Boxes_down() 호출
             _Score.value += 100;   // 100점 획득
+            combo.value += 1;
         }
-        else _Score.value -= 100f; //왼쪽 블럭 중 가장아래(1층) 블럭의 색깔이 black 일 때 -100점
+        else {
+            _gauge.fillAmount -= 0.3f;
+            combo.value = 0;
+            _Score.value -= 100; //왼쪽 블럭 중 가장아래(1층) 블럭의 색깔이 black 일 때 -100점
+        }
+
     }
 
     public void RClicked()    //오른쪽 버튼 클릭 시 호출되는 함수
@@ -52,9 +61,14 @@ public class boxes : MonoBehaviour {
         if (bxs_R[0].transform.GetComponent<SpriteRenderer>().color == base_col[0])     //오른쪽 블럭 중 가장아래(1층) 블럭의 색깔이 blue일 때 실행
         {
             Boxes_down();         //Boxes_down() 호출
-            _Score.value += 100f; // 100점 획득
+            _Score.value += 100; // 100점 획득
+            combo.value += 1;
         }
-        else _Score.value -= 100f; //오른쪽 블럭 중 가장아래(1층) 블럭의 색깔이 black 일 때 -100점
+        else {
+            _gauge.fillAmount -= 0.3f;
+            combo.value = 0;
+            _Score.value -= 100; //오른쪽 블럭 중 가장아래(1층) 블럭의 색깔이 black 일 때 -100점
+        }
     }
 
 

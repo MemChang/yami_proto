@@ -2,20 +2,20 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Score : MonoBehaviour {
+public class Combo : MonoBehaviour {
 
     public int value = 0;
-    private Text scoreValue;
+    private Text comboValue;
 
     // Use this for initialization
     void Awake()
     {
-        scoreValue = GetComponent<Text>();
+        comboValue = GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
-       scoreValue.text = string.Format("{0:d10}", value);
+        comboValue.text = string.Format("{0:d}", value);
     }
 }
